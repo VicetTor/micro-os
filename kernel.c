@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stddef.h>
+#include "idt.h"
 
 static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 25;
@@ -70,6 +71,8 @@ void delay(void){
 
 void kernel_main(void) {
     terminal_initialize();
+    idt_install();
+    __asm__ volatile("sti");
     for(size_t i = 0; i < 35; i++){
 	terminal_write("Test de defilement ligne par ligne\n");
         delay();
